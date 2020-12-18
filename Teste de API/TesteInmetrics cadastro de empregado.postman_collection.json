@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "7a9817c3-d35a-4238-9e8e-6b97203ac803",
+		"name": "TesteInmetrics cadastro de empregado",
+		"description": "Teste de API inmetrics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Deve incluir empregado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Objeto criado e retornado na resposta', () => {\r",
+							"    const resposta = pm.response.json();\r",
+							"\r",
+							"    /// A descricaoPadrao na variavel tem \"'\"(aspas), e ao validar aqui preciso retirar\r",
+							"    /// as aspas para nao dar erro na comparacao\r",
+							"    let descricaoPadrao = String(pm.collectionVariables.get(\"descPadrao\")).replace(/\"/gi,'');\r",
+							"    \r",
+							"    pm.expect(resposta).to.have.property('empregadoId') \r",
+							"    pm.expect(resposta).to.have.property('nome')       \r",
+							"    pm.expect(resposta.id).to.not.be.NaN;\r",
+							"    pm.expect(resposta.nome).to.eql(descricaoPadrao) //valida nome do empregado\r",
+							"\r",
+							"    \r",
+							"    pm.collectionVariables.set(\"empregadoId\",resposta.empregadoId)\r",
+							"    \r",
+							"    \r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"admissao\": \"17/12/2020\",\r\n    \"cargo\": \"analista de teste\",\r\n    \"comissao\": \"1.000,00\",\r\n    \"cpf\": \"031.239.835-28\",\r\n    \"departamentoId\": 1,\r\n    \"nome\": {{descPadrao}},\r\n    \"salario\": \"5.000,00\",\r\n    \"sexo\": \"m\",\r\n    \"tipoContratacao\": \"clt\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://inm-api-test.herokuapp.com/empregado/cadastrar",
+					"protocol": "https",
+					"host": [
+						"inm-api-test",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"empregado",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deve retornar todos empregados",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Resposta é um ARRAY', () => {\r",
+							"    const resposta = pm.response.json();\r",
+							"    pm.expect(Array.isArray(resposta))\r",
+							"\r",
+							"    \r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://inm-api-test.herokuapp.com/empregado/list_all",
+					"protocol": "https",
+					"host": [
+						"inm-api-test",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"empregado",
+						"list_all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deve retornar único empregado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Resposta é um ARRAY', () => {\r",
+							"    const resposta = pm.response.json();\r",
+							"    pm.expect(Array.isArray(resposta))\r",
+							"\r",
+							"    \r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://inm-api-test.herokuapp.com/empregado/list/{{empregadoId}}",
+					"protocol": "https",
+					"host": [
+						"inm-api-test",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"empregado",
+						"list",
+						"{{empregadoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deve editar empregado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Objeto criado e retornado na resposta', () => {\r",
+							"    const resposta = pm.response.json();\r",
+							"\r",
+							"    /// A descricaoPadrao na variavel tem \"'\"(aspas), e ao validar aqui preciso retirar\r",
+							"    /// as aspas para nao dar erro na comparacao\r",
+							"    let descricaoPadrao = String(pm.collectionVariables.get(\"descPadraoUpdate\")).replace(/\"/gi,'');\r",
+							"    \r",
+							"    pm.expect(resposta).to.have.property('empregadoId') \r",
+							"    pm.expect(resposta).to.have.property('nome')       \r",
+							"    pm.expect(resposta.id).to.not.be.NaN;\r",
+							"    pm.expect(resposta.nome).to.eql(descricaoPadrao) //valida nome do empregado\r",
+							"\r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"    \r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"admissao\": \"17/12/2020\",\r\n    \"cargo\": \"analista de teste\",\r\n    \"comissao\": \"1.000,00\",\r\n    \"cpf\": \"031.239.835-28\",\r\n    \"departamentoId\": 1,\r\n    \"nome\": {{descPadraoUpdate}},\r\n    \"salario\": \"6.000,00\",\r\n    \"sexo\": \"m\",\r\n    \"tipoContratacao\": \"clt\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://inm-api-test.herokuapp.com/empregado/alterar/{{empregadoId}}",
+					"protocol": "https",
+					"host": [
+						"inm-api-test",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"empregado",
+						"alterar",
+						"{{empregadoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deve excluir empregado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://inm-api-test.herokuapp.com/empregado/deletar/{{empregadoId}}",
+					"protocol": "https",
+					"host": [
+						"inm-api-test",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"empregado",
+						"deletar",
+						"{{empregadoId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "automacao",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "inmetrics",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test('Código de STATUS da resposta 200 (OK) ou 201 (Novo registro criado) ou 202 (Requisição aceita)',() => {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+					"})"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "empregadoId",
+			"value": ""
+		},
+		{
+			"key": "descPadrao",
+			"value": "\"Empregado\""
+		},
+		{
+			"key": "descPadraoUpdate",
+			"value": "\"Empregado Editado\""
+		}
+	]
+}
